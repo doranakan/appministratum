@@ -7,7 +7,7 @@
     "@chakra-ui/react": "^2.5.1",
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@esbuild-plugins/node-modules-polyfill": "^0.2.2",
-    "@refinedev/chakra-ui": "^2.5.4",
+    "@refinedev/chakra-ui": "^2.27.2",
     "@refinedev/cli": "^2.16.22",
     "@refinedev/core": "^4.46.2",
     "@refinedev/inferencer": "^4.5.17",
