@@ -1,9 +1,9 @@
 import {
-  Authenticated,
-  ErrorComponent,
-  Refine,
-  WelcomePage,
-} from '@refinedev/core';
+  RefineThemes,
+  ThemedLayoutV2,
+  notificationProvider,
+} from '@refinedev/chakra-ui';
+import { Authenticated, ErrorComponent, Refine } from '@refinedev/core';
 import { RefineKbar, RefineKbarProvider } from '@refinedev/kbar';
 import routerBindings, {
   CatchAllNavigate,
@@ -13,16 +13,11 @@ import routerBindings, {
 } from '@refinedev/react-router-v6';
 import { dataProvider, liveProvider } from '@refinedev/supabase';
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
-import {
-  notificationProvider,
-  RefineThemes,
-  ThemedLayoutV2,
-} from '@refinedev/chakra-ui';
 
 import { ChakraProvider } from '@chakra-ui/react';
 import authProvider from './authProvider';
-import { supabaseClient } from './utility';
 import { LoginPage } from './pages';
+import { supabaseClient } from './utility';
 
 import { ChakraUIInferencer } from '@refinedev/inferencer/chakra-ui';
 
@@ -49,13 +44,6 @@ function App() {
                 list: '/codexes',
                 name: 'codexes',
                 show: '/codexes/show/:id',
-              },
-              {
-                create: '/factions/create',
-                edit: '/factions/edit/:id',
-                list: '/factions',
-                name: 'factions',
-                show: '/factions/show/:id',
               },
               {
                 create: '/units/create',
@@ -87,12 +75,6 @@ function App() {
                     element={<NavigateToResource resource="codexes" />}
                   />
                   <Route path="codexes">
-                    <Route index element={<ChakraUIInferencer />} />
-                    <Route path="show/:id" element={<ChakraUIInferencer />} />
-                    <Route path="edit/:id" element={<ChakraUIInferencer />} />
-                    <Route path="create" element={<ChakraUIInferencer />} />
-                  </Route>
-                  <Route path="factions">
                     <Route index element={<ChakraUIInferencer />} />
                     <Route path="show/:id" element={<ChakraUIInferencer />} />
                     <Route path="edit/:id" element={<ChakraUIInferencer />} />
