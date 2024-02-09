@@ -1,6 +1,6 @@
-import { AuthBindings } from '@refinedev/core';
+import { AuthBindings } from '@refinedev/core'
 
-import { supabaseClient } from './utility';
+import { supabaseClient } from './utility'
 
 const authProvider: AuthBindings = {
   login: async ({ email, password, providerName }) => {
@@ -8,234 +8,234 @@ const authProvider: AuthBindings = {
     try {
       if (providerName) {
         const { data, error } = await supabaseClient.auth.signInWithOAuth({
-          provider: providerName,
-        });
+          provider: providerName
+        })
 
         if (error) {
           return {
             success: false,
-            error,
-          };
+            error
+          }
         }
 
         if (data?.url) {
           return {
             success: true,
-            redirectTo: '/',
-          };
+            redirectTo: '/'
+          }
         }
       }
 
       // sign in with email and password
       const { data, error } = await supabaseClient.auth.signInWithPassword({
         email,
-        password,
-      });
+        password
+      })
 
       if (error) {
         return {
           success: false,
-          error,
-        };
+          error
+        }
       }
 
       if (data?.user) {
         return {
           success: true,
-          redirectTo: '/',
-        };
+          redirectTo: '/'
+        }
       }
     } catch (error: any) {
       return {
         success: false,
-        error,
-      };
+        error
+      }
     }
 
     return {
       success: false,
       error: {
         message: 'Login failed',
-        name: 'Invalid email or password',
-      },
-    };
+        name: 'Invalid email or password'
+      }
+    }
   },
   register: async ({ email, password }) => {
     try {
       const { data, error } = await supabaseClient.auth.signUp({
         email,
-        password,
-      });
+        password
+      })
 
       if (error) {
         return {
           success: false,
-          error,
-        };
+          error
+        }
       }
 
       if (data) {
         return {
           success: true,
-          redirectTo: '/',
-        };
+          redirectTo: '/'
+        }
       }
     } catch (error: any) {
       return {
         success: false,
-        error,
-      };
+        error
+      }
     }
 
     return {
       success: false,
       error: {
         message: 'Register failed',
-        name: 'Invalid email or password',
-      },
-    };
+        name: 'Invalid email or password'
+      }
+    }
   },
   forgotPassword: async ({ email }) => {
     try {
       const { data, error } = await supabaseClient.auth.resetPasswordForEmail(
         email,
         {
-          redirectTo: `${window.location.origin}/update-password`,
+          redirectTo: `${window.location.origin}/update-password`
         }
-      );
+      )
 
       if (error) {
         return {
           success: false,
-          error,
-        };
+          error
+        }
       }
 
       if (data) {
         return {
-          success: true,
-        };
+          success: true
+        }
       }
     } catch (error: any) {
       return {
         success: false,
-        error,
-      };
+        error
+      }
     }
 
     return {
       success: false,
       error: {
         message: 'Forgot password failed',
-        name: 'Invalid email',
-      },
-    };
+        name: 'Invalid email'
+      }
+    }
   },
   updatePassword: async ({ password }) => {
     try {
       const { data, error } = await supabaseClient.auth.updateUser({
-        password,
-      });
+        password
+      })
 
       if (error) {
         return {
           success: false,
-          error,
-        };
+          error
+        }
       }
 
       if (data) {
         return {
           success: true,
-          redirectTo: '/',
-        };
+          redirectTo: '/'
+        }
       }
     } catch (error: any) {
       return {
         success: false,
-        error,
-      };
+        error
+      }
     }
     return {
       success: false,
       error: {
         message: 'Update password failed',
-        name: 'Invalid password',
-      },
-    };
+        name: 'Invalid password'
+      }
+    }
   },
   logout: async () => {
-    const { error } = await supabaseClient.auth.signOut();
+    const { error } = await supabaseClient.auth.signOut()
 
     if (error) {
       return {
         success: false,
-        error,
-      };
+        error
+      }
     }
 
     return {
       success: true,
-      redirectTo: '/',
-    };
+      redirectTo: '/'
+    }
   },
   onError: async (error) => {
-    console.error(error);
-    return { error };
+    console.error(error)
+    return { error }
   },
   check: async () => {
     try {
-      const { data } = await supabaseClient.auth.getSession();
-      const { session } = data;
+      const { data } = await supabaseClient.auth.getSession()
+      const { session } = data
 
       if (!session) {
         return {
           authenticated: false,
           error: {
             message: 'Check failed',
-            name: 'Session not found',
+            name: 'Session not found'
           },
           logout: true,
-          redirectTo: '/login',
-        };
+          redirectTo: '/login'
+        }
       }
     } catch (error: any) {
       return {
         authenticated: false,
         error: error || {
           message: 'Check failed',
-          name: 'Not authenticated',
+          name: 'Not authenticated'
         },
         logout: true,
-        redirectTo: '/login',
-      };
+        redirectTo: '/login'
+      }
     }
 
     return {
-      authenticated: true,
-    };
+      authenticated: true
+    }
   },
   getPermissions: async () => {
-    const user = await supabaseClient.auth.getUser();
+    const user = await supabaseClient.auth.getUser()
 
     if (user) {
-      return user.data.user?.role;
+      return user.data.user?.role
     }
 
-    return null;
+    return null
   },
   getIdentity: async () => {
-    const { data } = await supabaseClient.auth.getUser();
+    const { data } = await supabaseClient.auth.getUser()
 
     if (data?.user) {
       return {
         ...data.user,
-        name: data.user.email,
-      };
+        name: data.user.email
+      }
     }
 
-    return null;
-  },
-};
+    return null
+  }
+}
 
-export default authProvider;
+export default authProvider

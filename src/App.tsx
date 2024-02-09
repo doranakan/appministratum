@@ -1,25 +1,25 @@
 import {
   RefineThemes,
   ThemedLayoutV2,
-  notificationProvider,
-} from '@refinedev/chakra-ui';
-import { Authenticated, ErrorComponent, Refine } from '@refinedev/core';
-import { RefineKbar, RefineKbarProvider } from '@refinedev/kbar';
+  notificationProvider
+} from '@refinedev/chakra-ui'
+import { Authenticated, ErrorComponent, Refine } from '@refinedev/core'
+import { RefineKbar, RefineKbarProvider } from '@refinedev/kbar'
 import routerBindings, {
   CatchAllNavigate,
   DocumentTitleHandler,
   NavigateToResource,
-  UnsavedChangesNotifier,
-} from '@refinedev/react-router-v6';
-import { dataProvider, liveProvider } from '@refinedev/supabase';
-import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom';
+  UnsavedChangesNotifier
+} from '@refinedev/react-router-v6'
+import { dataProvider, liveProvider } from '@refinedev/supabase'
+import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
 
-import { ChakraProvider } from '@chakra-ui/react';
-import authProvider from './authProvider';
-import { LoginPage } from './pages';
-import { supabaseClient } from './utility';
+import { ChakraProvider } from '@chakra-ui/react'
+import authProvider from './authProvider'
+import { LoginPage } from './pages'
+import { supabaseClient } from './utility'
 
-import { ChakraUIInferencer } from '@refinedev/inferencer/chakra-ui';
+import { ChakraUIInferencer } from '@refinedev/inferencer/chakra-ui'
 
 function App() {
   return (
@@ -35,7 +35,7 @@ function App() {
             options={{
               syncWithLocation: true,
               warnWhenUnsavedChanges: true,
-              projectId: 'QwIWik-v6bZYI-AdQS2F',
+              projectId: 'QwIWik-v6bZYI-AdQS2F'
             }}
             resources={[
               {
@@ -43,22 +43,22 @@ function App() {
                 edit: '/codexes/edit/:id',
                 list: '/codexes',
                 name: 'codexes',
-                show: '/codexes/show/:id',
+                show: '/codexes/show/:id'
               },
               {
                 create: '/units/create',
                 edit: '/units/edit/:id',
                 list: '/units',
                 name: 'units',
-                show: '/units/show/:id',
-              },
+                show: '/units/show/:id'
+              }
             ]}
             routerProvider={routerBindings}
           >
             <Routes>
               <Route
                 element={
-                  <Authenticated fallback={<CatchAllNavigate to="/login" />}>
+                  <Authenticated fallback={<CatchAllNavigate to='/login' />}>
                     <Outlet />
                   </Authenticated>
                 }
@@ -72,25 +72,55 @@ function App() {
                 >
                   <Route
                     index
-                    element={<NavigateToResource resource="codexes" />}
+                    element={<NavigateToResource resource='codexes' />}
                   />
-                  <Route path="codexes">
-                    <Route index element={<ChakraUIInferencer />} />
-                    <Route path="show/:id" element={<ChakraUIInferencer />} />
-                    <Route path="edit/:id" element={<ChakraUIInferencer />} />
-                    <Route path="create" element={<ChakraUIInferencer />} />
+                  <Route path='codexes'>
+                    <Route
+                      index
+                      element={<ChakraUIInferencer />}
+                    />
+                    <Route
+                      path='show/:id'
+                      element={<ChakraUIInferencer />}
+                    />
+                    <Route
+                      path='edit/:id'
+                      element={<ChakraUIInferencer />}
+                    />
+                    <Route
+                      path='create'
+                      element={<ChakraUIInferencer />}
+                    />
                   </Route>
-                  <Route path="units">
-                    <Route index element={<ChakraUIInferencer />} />
-                    <Route path="show/:id" element={<ChakraUIInferencer />} />
-                    <Route path="edit/:id" element={<ChakraUIInferencer />} />
-                    <Route path="create" element={<ChakraUIInferencer />} />
+                  <Route path='units'>
+                    <Route
+                      index
+                      element={<ChakraUIInferencer />}
+                    />
+                    <Route
+                      path='show/:id'
+                      element={<ChakraUIInferencer />}
+                    />
+                    <Route
+                      path='edit/:id'
+                      element={<ChakraUIInferencer />}
+                    />
+                    <Route
+                      path='create'
+                      element={<ChakraUIInferencer />}
+                    />
                   </Route>
-                  <Route path="*" element={<ErrorComponent />} />
+                  <Route
+                    path='*'
+                    element={<ErrorComponent />}
+                  />
                 </Route>
               </Route>
               <Route element={<Authenticated fallback={<Outlet />} />}>
-                <Route path="/login" element={<LoginPage />} />
+                <Route
+                  path='/login'
+                  element={<LoginPage />}
+                />
               </Route>
             </Routes>
             <RefineKbar />
@@ -100,7 +130,7 @@ function App() {
         </ChakraProvider>
       </RefineKbarProvider>
     </BrowserRouter>
-  );
+  )
 }
 
-export default App;
+export default App

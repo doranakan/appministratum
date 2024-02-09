@@ -1,6 +1,6 @@
-import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
-import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill';
-import rollupNodePolyFill from 'rollup-plugin-node-polyfills';
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
+import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill'
+import rollupNodePolyFill from 'rollup-plugin-node-polyfills'
 
 export default {
   resolve: {
@@ -38,32 +38,32 @@ export default {
       vm: 'rollup-plugin-node-polyfills/polyfills/vm',
       zlib: 'rollup-plugin-node-polyfills/polyfills/zlib',
       tty: 'rollup-plugin-node-polyfills/polyfills/tty',
-      domain: 'rollup-plugin-node-polyfills/polyfills/domain',
-    },
+      domain: 'rollup-plugin-node-polyfills/polyfills/domain'
+    }
   },
   optimizeDeps: {
     esbuildOptions: {
       // Node.js global to browser globalThis
       define: {
-        global: 'globalThis',
+        global: 'globalThis'
       },
       // Enable esbuild polyfill plugins
       plugins: [
         NodeGlobalsPolyfillPlugin({
           process: true,
-          buffer: true,
+          buffer: true
         }),
-        NodeModulesPolyfillPlugin(),
-      ],
-    },
+        NodeModulesPolyfillPlugin()
+      ]
+    }
   },
   build: {
     rollupOptions: {
       plugins: [
         // Enable rollup polyfills plugin
         // used during production bundling
-        rollupNodePolyFill(),
-      ],
-    },
-  },
-};
+        rollupNodePolyFill()
+      ]
+    }
+  }
+}
