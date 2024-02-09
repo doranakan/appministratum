@@ -1,6 +1,7 @@
 import {
   RefineThemes,
   ThemedLayoutV2,
+  ThemedSiderV2,
   notificationProvider
 } from '@refinedev/chakra-ui'
 import { Authenticated, ErrorComponent, Refine } from '@refinedev/core'
@@ -16,7 +17,7 @@ import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
 
 import { ChakraProvider } from '@chakra-ui/react'
 import authProvider from './authProvider'
-import { LoginPage } from './pages'
+import { CodexListPage, LoginPage, UnitCreatePage, UnitListPage } from './pages'
 import { supabaseClient } from './utility'
 
 import { ChakraUIInferencer } from '@refinedev/inferencer/chakra-ui'
@@ -26,7 +27,7 @@ function App() {
     <BrowserRouter>
       <RefineKbarProvider>
         {/* You can change the theme colors here. example: theme={RefineThemes.Magenta} */}
-        <ChakraProvider theme={RefineThemes.Blue}>
+        <ChakraProvider theme={RefineThemes.Magenta}>
           <Refine
             authProvider={authProvider}
             dataProvider={dataProvider(supabaseClient)}
@@ -58,14 +59,19 @@ function App() {
             <Routes>
               <Route
                 element={
-                  <Authenticated fallback={<CatchAllNavigate to='/login' />}>
+                  <Authenticated
+                    fallback={<CatchAllNavigate to='/login' />}
+                    key='loggedIn'
+                  >
                     <Outlet />
                   </Authenticated>
                 }
               >
                 <Route
                   element={
-                    <ThemedLayoutV2>
+                    <ThemedLayoutV2
+                      Sider={() => <ThemedSiderV2 render={() => <></>} />}
+                    >
                       <Outlet />
                     </ThemedLayoutV2>
                   }
@@ -77,7 +83,7 @@ function App() {
                   <Route path='codexes'>
                     <Route
                       index
-                      element={<ChakraUIInferencer />}
+                      Component={CodexListPage}
                     />
                     <Route
                       path='show/:id'
@@ -95,7 +101,7 @@ function App() {
                   <Route path='units'>
                     <Route
                       index
-                      element={<ChakraUIInferencer />}
+                      Component={UnitListPage}
                     />
                     <Route
                       path='show/:id'
@@ -107,7 +113,7 @@ function App() {
                     />
                     <Route
                       path='create'
-                      element={<ChakraUIInferencer />}
+                      element={<UnitCreatePage />}
                     />
                   </Route>
                   <Route
@@ -116,7 +122,14 @@ function App() {
                   />
                 </Route>
               </Route>
-              <Route element={<Authenticated fallback={<Outlet />} />}>
+              <Route
+                element={
+                  <Authenticated
+                    fallback={<Outlet />}
+                    key='unregistered'
+                  />
+                }
+              >
                 <Route
                   path='/login'
                   element={<LoginPage />}
