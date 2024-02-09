@@ -17,7 +17,14 @@ import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
 
 import { ChakraProvider } from '@chakra-ui/react'
 import authProvider from './authProvider'
-import { CodexListPage, LoginPage, UnitCreatePage, UnitListPage } from './pages'
+import {
+  CodexListPage,
+  LoginPage,
+  UnitCreatePage,
+  UnitListPage,
+  UnitTiersCreate,
+  UnitTiersList
+} from './pages'
 import { supabaseClient } from './utility'
 
 import { ChakraUIInferencer } from '@refinedev/inferencer/chakra-ui'
@@ -43,15 +50,19 @@ function App() {
                 create: '/codexes/create',
                 edit: '/codexes/edit/:id',
                 list: '/codexes',
-                name: 'codexes',
-                show: '/codexes/show/:id'
+                name: 'codexes'
               },
               {
                 create: '/units/create',
                 edit: '/units/edit/:id',
                 list: '/units',
-                name: 'units',
-                show: '/units/show/:id'
+                name: 'units'
+              },
+              {
+                create: '/unit_tiers/create',
+                edit: '/unit_tiers/edit/:id',
+                list: '/unit_tiers',
+                name: 'unit_tiers'
               }
             ]}
             routerProvider={routerBindings}
@@ -86,10 +97,6 @@ function App() {
                       Component={CodexListPage}
                     />
                     <Route
-                      path='show/:id'
-                      element={<ChakraUIInferencer />}
-                    />
-                    <Route
                       path='edit/:id'
                       element={<ChakraUIInferencer />}
                     />
@@ -104,16 +111,26 @@ function App() {
                       Component={UnitListPage}
                     />
                     <Route
-                      path='show/:id'
-                      element={<ChakraUIInferencer />}
-                    />
-                    <Route
                       path='edit/:id'
                       element={<ChakraUIInferencer />}
                     />
                     <Route
                       path='create'
                       element={<UnitCreatePage />}
+                    />
+                  </Route>
+                  <Route
+                    path='*'
+                    element={<ErrorComponent />}
+                  />
+                  <Route path='unit_tiers'>
+                    <Route
+                      index
+                      Component={UnitTiersList}
+                    />
+                    <Route
+                      path='create'
+                      element={<UnitTiersCreate />}
                     />
                   </Route>
                   <Route

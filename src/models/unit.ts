@@ -7,6 +7,7 @@ type Unit = {
   caption?: string
   leader: boolean
   limit: number
+  tier1: number
 }
 
 export type { Unit }

@@ -6,12 +6,15 @@ import {
   Input
 } from '@chakra-ui/react'
 import { Create } from '@refinedev/chakra-ui'
-import { IResourceComponentsProps, useParsed } from '@refinedev/core'
+import { IResourceComponentsProps, useGo, useParsed } from '@refinedev/core'
 import { useForm } from '@refinedev/react-hook-form'
 import { Unit } from '../../../models'
 
 const UnitCreatePage: React.FC<IResourceComponentsProps> = () => {
   const { params } = useParsed()
+  const codexId = params?.codexId
+
+  const go = useGo()
 
   const {
     refineCore: { formLoading },
@@ -19,8 +22,19 @@ const UnitCreatePage: React.FC<IResourceComponentsProps> = () => {
     register,
     formState: { errors }
   } = useForm<Unit>({
+    refineCoreProps: {
+      onMutationSuccess: () =>
+        go({
+          to: '../',
+          query: {
+            codexId
+          }
+        }),
+      redirect: false
+    },
     defaultValues: {
-      codex: params?.codexId
+      codex: codexId,
+      leader: false
     }
   })
 
@@ -62,11 +76,7 @@ const UnitCreatePage: React.FC<IResourceComponentsProps> = () => {
         isInvalid={!!errors?.leader}
       >
         <FormLabel>Leader</FormLabel>
-        <Checkbox
-          {...register('leader', {
-            required: 'This field is required'
-          })}
-        />
+        <Checkbox {...register('leader')} />
         <FormErrorMessage>{errors?.leader?.message as string}</FormErrorMessage>
       </FormControl>
       <FormControl
