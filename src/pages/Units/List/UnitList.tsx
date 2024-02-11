@@ -34,11 +34,6 @@ const UnitListPage: React.FC<IResourceComponentsProps> = () => {
   const columns = React.useMemo<ColumnDef<Unit>[]>(
     () => [
       {
-        id: 'id',
-        accessorKey: 'id',
-        header: 'Id'
-      },
-      {
         id: 'name',
         accessorKey: 'name',
         header: 'Name'

@@ -25,11 +25,6 @@ const CodexListPage: React.FC<IResourceComponentsProps> = () => {
   const columns = React.useMemo<ColumnDef<Codex>[]>(
     () => [
       {
-        id: 'id',
-        accessorKey: 'id',
-        header: 'Id'
-      },
-      {
         id: 'name',
         accessorKey: 'name',
         header: 'Name'
@@ -84,7 +79,17 @@ const CodexListPage: React.FC<IResourceComponentsProps> = () => {
       tableQueryResult: { data: tableData }
     }
   } = useTable({
-    columns
+    columns,
+    refineCoreProps: {
+      sorters: {
+        initial: [
+          {
+            field: 'name',
+            order: 'asc'
+          }
+        ]
+      }
+    }
   })
 
   setOptions((prev) => ({

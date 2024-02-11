@@ -33,27 +33,6 @@ const UnitTiersList: React.FC<IResourceComponentsProps> = () => {
   const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
       {
-        id: 'id',
-        accessorKey: 'id',
-        header: 'Id'
-      },
-      //   {
-      //     id: 'unit',
-      //     header: 'Unit',
-      //     accessorKey: 'unit',
-      //     cell: function render({ getValue, table }) {
-      //       const meta = table.options.meta as {
-      //         unitData: GetManyResponse
-      //       }
-
-      //       const unit = meta.unitData?.data?.find(
-      //         (item) => item.id == getValue<any>()
-      //       )
-
-      //       return unit?.name ?? 'Loading...'
-      //     }
-      //   },
-      {
         id: 'points',
         accessorKey: 'points',
         header: 'Points'
@@ -65,14 +44,6 @@ const UnitTiersList: React.FC<IResourceComponentsProps> = () => {
         cell: function render({ getValue }) {
           return (
             <HStack>
-              {/* <ShowButton
-                hideText
-                recordItemId={getValue() as string}
-              />
-              <EditButton
-                hideText
-                recordItemId={getValue() as string}
-              /> */}
               <Button
                 onClick={() =>
                   go({

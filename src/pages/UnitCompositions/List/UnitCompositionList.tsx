@@ -40,11 +40,6 @@ const UnitCompositionList: React.FC<IResourceComponentsProps> = () => {
   const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
       {
-        id: 'id',
-        accessorKey: 'id',
-        header: 'Id'
-      },
-      {
         id: 'unit_tier',
         header: 'Unit Tier',
         accessorKey: 'unit_tier',

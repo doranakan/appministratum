@@ -32,11 +32,6 @@ const ModelList: React.FC<IResourceComponentsProps> = () => {
   const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
       {
-        id: 'id',
-        accessorKey: 'id',
-        header: 'Id'
-      },
-      {
         id: 'name',
         accessorKey: 'name',
         header: 'Name'
@@ -101,7 +96,17 @@ const ModelList: React.FC<IResourceComponentsProps> = () => {
       tableQueryResult: { data: tableData }
     }
   } = useTable({
-    columns
+    columns,
+    refineCoreProps: {
+      sorters: {
+        initial: [
+          {
+            field: 'name',
+            order: 'asc'
+          }
+        ]
+      }
+    }
   })
 
   setOptions((prev) => ({
