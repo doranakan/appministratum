@@ -53,6 +53,18 @@ const CodexListPage: React.FC<IResourceComponentsProps> = () => {
               >
                 Units
               </Button>
+              <Button
+                onClick={() =>
+                  go({
+                    to: '../models',
+                    query: {
+                      codexId: getValue()
+                    }
+                  })
+                }
+              >
+                Models
+              </Button>
             </HStack>
           )
         }

@@ -20,6 +20,10 @@ import authProvider from './authProvider'
 import {
   CodexListPage,
   LoginPage,
+  ModelCreate,
+  ModelList,
+  UnitCompositionCreate,
+  UnitCompositionList,
   UnitCreatePage,
   UnitListPage,
   UnitTiersCreate,
@@ -63,6 +67,18 @@ function App() {
                 edit: '/unit_tiers/edit/:id',
                 list: '/unit_tiers',
                 name: 'unit_tiers'
+              },
+              {
+                create: '/unit_compositions/create',
+                edit: '/unit_compositions/edit/:id',
+                list: '/unit_compositions',
+                name: 'unit_compositions'
+              },
+              {
+                create: '/models/create',
+                edit: '/models/edit/:id',
+                list: '/models',
+                name: 'models'
               }
             ]}
             routerProvider={routerBindings}
@@ -98,11 +114,11 @@ function App() {
                     />
                     <Route
                       path='edit/:id'
-                      element={<ChakraUIInferencer />}
+                      Component={ChakraUIInferencer}
                     />
                     <Route
                       path='create'
-                      element={<ChakraUIInferencer />}
+                      Component={ChakraUIInferencer}
                     />
                   </Route>
                   <Route path='units'>
@@ -112,7 +128,7 @@ function App() {
                     />
                     <Route
                       path='edit/:id'
-                      element={<ChakraUIInferencer />}
+                      Component={ChakraUIInferencer}
                     />
                     <Route
                       path='create'
@@ -130,7 +146,27 @@ function App() {
                     />
                     <Route
                       path='create'
-                      element={<UnitTiersCreate />}
+                      Component={UnitTiersCreate}
+                    />
+                  </Route>
+                  <Route path='unit_compositions'>
+                    <Route
+                      index
+                      Component={UnitCompositionList}
+                    />
+                    <Route
+                      path='create'
+                      Component={UnitCompositionCreate}
+                    />
+                  </Route>
+                  <Route path='models'>
+                    <Route
+                      index
+                      Component={ModelList}
+                    />
+                    <Route
+                      path='create'
+                      Component={ModelCreate}
                     />
                   </Route>
                   <Route

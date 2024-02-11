@@ -12,7 +12,6 @@ import {
   Tr
 } from '@chakra-ui/react'
 import {
-  BooleanField,
   CreateButton,
   EditButton,
   List,
@@ -23,15 +22,14 @@ import { useTable } from '@refinedev/react-table'
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons'
 import { ColumnDef, flexRender } from '@tanstack/react-table'
 import React from 'react'
-import { Unit } from '../../../models'
 
-const UnitListPage: React.FC<IResourceComponentsProps> = () => {
+const ModelList: React.FC<IResourceComponentsProps> = () => {
   const { params } = useParsed()
   const codexId = params?.codexId
 
   const go = useGo()
 
-  const columns = React.useMemo<ColumnDef<Unit>[]>(
+  const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
       {
         id: 'id',
@@ -44,22 +42,34 @@ const UnitListPage: React.FC<IResourceComponentsProps> = () => {
         header: 'Name'
       },
       {
-        id: 'caption',
-        accessorKey: 'caption',
-        header: 'Caption'
+        id: 'm',
+        accessorKey: 'm',
+        header: 'M'
       },
       {
-        id: 'leader',
-        accessorKey: 'leader',
-        header: 'Leader',
-        cell: function render({ getValue }) {
-          return <BooleanField value={getValue<any>()} />
-        }
+        id: 't',
+        accessorKey: 't',
+        header: 'T'
       },
       {
-        id: 'limit',
-        accessorKey: 'limit',
-        header: 'Limit'
+        id: 'sv',
+        accessorKey: 'sv',
+        header: 'Sv'
+      },
+      {
+        id: 'w',
+        accessorKey: 'w',
+        header: 'W'
+      },
+      {
+        id: 'ld',
+        accessorKey: 'ld',
+        header: 'Ld'
+      },
+      {
+        id: 'oc',
+        accessorKey: 'oc',
+        header: 'Oc'
       },
       {
         id: 'actions',
@@ -72,19 +82,6 @@ const UnitListPage: React.FC<IResourceComponentsProps> = () => {
                 hideText
                 recordItemId={getValue() as string}
               />
-              <Button
-                onClick={() =>
-                  go({
-                    to: '../unit_tiers',
-                    query: {
-                      codexId,
-                      unitId: getValue()
-                    }
-                  })
-                }
-              >
-                Tiers
-              </Button>
             </HStack>
           )
         }
@@ -104,26 +101,7 @@ const UnitListPage: React.FC<IResourceComponentsProps> = () => {
       tableQueryResult: { data: tableData }
     }
   } = useTable({
-    columns,
-    refineCoreProps: {
-      filters: {
-        initial: [
-          {
-            field: 'codex',
-            operator: 'eq',
-            value: codexId
-          }
-        ]
-      },
-      sorters: {
-        initial: [
-          {
-            field: 'name',
-            order: 'asc'
-          }
-        ]
-      }
-    }
+    columns
   })
 
   setOptions((prev) => ({
@@ -250,4 +228,4 @@ const Pagination: React.FC<PaginationProps> = ({
   )
 }
 
-export default UnitListPage
+export default ModelList

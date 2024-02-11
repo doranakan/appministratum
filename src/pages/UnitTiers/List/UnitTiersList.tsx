@@ -57,26 +57,40 @@ const UnitTiersList: React.FC<IResourceComponentsProps> = () => {
         id: 'points',
         accessorKey: 'points',
         header: 'Points'
+      },
+      {
+        id: 'actions',
+        accessorKey: 'id',
+        header: 'Actions',
+        cell: function render({ getValue }) {
+          return (
+            <HStack>
+              {/* <ShowButton
+                hideText
+                recordItemId={getValue() as string}
+              />
+              <EditButton
+                hideText
+                recordItemId={getValue() as string}
+              /> */}
+              <Button
+                onClick={() =>
+                  go({
+                    to: '../unit_compositions',
+                    query: {
+                      codexId,
+                      unitId,
+                      unitTierId: getValue()
+                    }
+                  })
+                }
+              >
+                Composition
+              </Button>
+            </HStack>
+          )
+        }
       }
-      // {
-      //   id: 'actions',
-      //   accessorKey: 'id',
-      //   header: 'Actions',
-      //   cell: function render({ getValue }) {
-      //     return (
-      //       <HStack>
-      //         {/* <ShowButton
-      //           hideText
-      //           recordItemId={getValue() as string}
-      //         />
-      //         <EditButton
-      //           hideText
-      //           recordItemId={getValue() as string}
-      //         /> */}
-      //       </HStack>
-      //     )
-      //   }
-      // }
     ],
     []
   )

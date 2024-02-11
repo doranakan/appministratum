@@ -12,26 +12,32 @@ import {
   Tr
 } from '@chakra-ui/react'
 import {
-  BooleanField,
   CreateButton,
   EditButton,
   List,
   usePagination
 } from '@refinedev/chakra-ui'
-import { IResourceComponentsProps, useGo, useParsed } from '@refinedev/core'
+import {
+  GetManyResponse,
+  IResourceComponentsProps,
+  useGo,
+  useMany,
+  useParsed
+} from '@refinedev/core'
 import { useTable } from '@refinedev/react-table'
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons'
 import { ColumnDef, flexRender } from '@tanstack/react-table'
 import React from 'react'
-import { Unit } from '../../../models'
 
-const UnitListPage: React.FC<IResourceComponentsProps> = () => {
+const UnitCompositionList: React.FC<IResourceComponentsProps> = () => {
   const { params } = useParsed()
   const codexId = params?.codexId
+  const unitId = params?.unitId
+  const unitTierId = params?.unitTierId
 
   const go = useGo()
 
-  const columns = React.useMemo<ColumnDef<Unit>[]>(
+  const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
       {
         id: 'id',
@@ -39,27 +45,41 @@ const UnitListPage: React.FC<IResourceComponentsProps> = () => {
         header: 'Id'
       },
       {
-        id: 'name',
-        accessorKey: 'name',
-        header: 'Name'
-      },
-      {
-        id: 'caption',
-        accessorKey: 'caption',
-        header: 'Caption'
-      },
-      {
-        id: 'leader',
-        accessorKey: 'leader',
-        header: 'Leader',
-        cell: function render({ getValue }) {
-          return <BooleanField value={getValue<any>()} />
+        id: 'unit_tier',
+        header: 'Unit Tier',
+        accessorKey: 'unit_tier',
+        cell: function render({ getValue, table }) {
+          const meta = table.options.meta as {
+            unitTierData: GetManyResponse
+          }
+
+          const unitTier = meta.unitTierData?.data?.find(
+            (item) => item.id == getValue<any>()
+          )
+
+          return unitTier?.points ?? 'Loading...'
         }
       },
       {
-        id: 'limit',
-        accessorKey: 'limit',
-        header: 'Limit'
+        id: 'count',
+        accessorKey: 'count',
+        header: 'Count'
+      },
+      {
+        id: 'model',
+        header: 'Model',
+        accessorKey: 'model',
+        cell: function render({ getValue, table }) {
+          const meta = table.options.meta as {
+            modelData: GetManyResponse
+          }
+
+          const model = meta.modelData?.data?.find(
+            (item) => item.id == getValue<any>()
+          )
+
+          return model?.name ?? 'Loading...'
+        }
       },
       {
         id: 'actions',
@@ -72,19 +92,6 @@ const UnitListPage: React.FC<IResourceComponentsProps> = () => {
                 hideText
                 recordItemId={getValue() as string}
               />
-              <Button
-                onClick={() =>
-                  go({
-                    to: '../unit_tiers',
-                    query: {
-                      codexId,
-                      unitId: getValue()
-                    }
-                  })
-                }
-              >
-                Tiers
-              </Button>
             </HStack>
           )
         }
@@ -109,44 +116,56 @@ const UnitListPage: React.FC<IResourceComponentsProps> = () => {
       filters: {
         initial: [
           {
-            field: 'codex',
+            field: 'unit_tier',
             operator: 'eq',
-            value: codexId
-          }
-        ]
-      },
-      sorters: {
-        initial: [
-          {
-            field: 'name',
-            order: 'asc'
+            value: unitTierId
           }
         ]
       }
     }
   })
 
+  const { data: unitTierData } = useMany({
+    resource: 'unit_tiers',
+    ids: tableData?.data?.map((item) => item?.unit_tier) ?? [],
+    queryOptions: {
+      enabled: !!tableData?.data
+    }
+  })
+
+  const { data: modelData } = useMany({
+    resource: 'models',
+    ids: tableData?.data?.map((item) => item?.model) ?? [],
+    queryOptions: {
+      enabled: !!tableData?.data
+    }
+  })
+
   setOptions((prev) => ({
     ...prev,
     meta: {
-      ...prev.meta
+      ...prev.meta,
+      unitTierData,
+      modelData
     }
   }))
 
   return (
     <List
-      headerButtons={
+      headerButtons={() => (
         <CreateButton
           onClick={() =>
             go({
               to: 'create',
               query: {
-                codexId
+                codexId,
+                unitId,
+                unitTierId
               }
             })
           }
         />
-      }
+      )}
     >
       <TableContainer whiteSpace='pre-line'>
         <Table variant='simple'>
@@ -250,4 +269,4 @@ const Pagination: React.FC<PaginationProps> = ({
   )
 }
 
-export default UnitListPage
+export default UnitCompositionList

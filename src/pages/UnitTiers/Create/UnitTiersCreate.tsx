@@ -12,7 +12,7 @@ import {
   useSelect
 } from '@refinedev/core'
 import { useForm } from '@refinedev/react-hook-form'
-import { UnitTier } from '../../../models/unitTier'
+import { UnitTier } from '../../../models'
 
 const UnitTiersCreate: React.FC<IResourceComponentsProps> = () => {
   const { params } = useParsed()
