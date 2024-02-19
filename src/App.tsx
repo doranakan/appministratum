@@ -27,7 +27,9 @@ import {
   UnitCreatePage,
   UnitListPage,
   UnitTiersCreate,
-  UnitTiersList
+  UnitTiersList,
+  WeaponCreate,
+  WeaponList
 } from './pages'
 import { supabaseClient } from './utility'
 
@@ -79,6 +81,12 @@ function App() {
                 edit: '/models/edit/:id',
                 list: '/models',
                 name: 'models'
+              },
+              {
+                create: '/weapons/create',
+                edit: '/weapons/edit/:id',
+                list: '/weapons',
+                name: 'weapons'
               }
             ]}
             routerProvider={routerBindings}
@@ -133,6 +141,16 @@ function App() {
                     <Route
                       path='create'
                       element={<UnitCreatePage />}
+                    />
+                  </Route>
+                  <Route path='weapons'>
+                    <Route
+                      index
+                      Component={WeaponList}
+                    />
+                    <Route
+                      path='create'
+                      Component={WeaponCreate}
                     />
                   </Route>
                   <Route

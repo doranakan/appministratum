@@ -12,26 +12,29 @@ import {
   Tr
 } from '@chakra-ui/react'
 import {
-  BooleanField,
   CreateButton,
   EditButton,
   List,
   usePagination
 } from '@refinedev/chakra-ui'
-import { IResourceComponentsProps, useGo, useParsed } from '@refinedev/core'
+import {
+  IResourceComponentsProps,
+  useGo,
+  useMany,
+  useParsed
+} from '@refinedev/core'
 import { useTable } from '@refinedev/react-table'
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons'
 import { ColumnDef, flexRender } from '@tanstack/react-table'
 import React from 'react'
-import { Unit } from '../../../models'
 
-const UnitListPage: React.FC<IResourceComponentsProps> = () => {
+const WeaponList: React.FC<IResourceComponentsProps> = () => {
   const { params } = useParsed()
-  const codexId = params?.codexId
+  const unitId = params?.unitId
 
   const go = useGo()
 
-  const columns = React.useMemo<ColumnDef<Unit>[]>(
+  const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
       {
         id: 'name',
@@ -39,22 +42,34 @@ const UnitListPage: React.FC<IResourceComponentsProps> = () => {
         header: 'Name'
       },
       {
-        id: 'caption',
-        accessorKey: 'caption',
-        header: 'Caption'
+        id: 'range',
+        accessorKey: 'range',
+        header: 'Range'
       },
       {
-        id: 'leader',
-        accessorKey: 'leader',
-        header: 'Leader',
-        cell: function render({ getValue }) {
-          return <BooleanField value={getValue<any>()} />
-        }
+        id: 'a',
+        accessorKey: 'a',
+        header: 'A'
       },
       {
-        id: 'limit',
-        accessorKey: 'limit',
-        header: 'Limit'
+        id: 'bs_ws',
+        accessorKey: 'bs_ws',
+        header: 'Bs Ws'
+      },
+      {
+        id: 's',
+        header: 'S',
+        accessorKey: 's'
+      },
+      {
+        id: 'ap',
+        accessorKey: 'ap',
+        header: 'Ap'
+      },
+      {
+        id: 'd',
+        accessorKey: 'd',
+        header: 'D'
       },
       {
         id: 'actions',
@@ -67,31 +82,6 @@ const UnitListPage: React.FC<IResourceComponentsProps> = () => {
                 hideText
                 recordItemId={getValue() as string}
               />
-              <Button
-                onClick={() =>
-                  go({
-                    to: '../unit_tiers',
-                    query: {
-                      codexId,
-                      unitId: getValue()
-                    }
-                  })
-                }
-              >
-                Tiers
-              </Button>
-              <Button
-                onClick={() =>
-                  go({
-                    to: '../weapons',
-                    query: {
-                      unitId: getValue()
-                    }
-                  })
-                }
-              >
-                Weapons
-              </Button>
             </HStack>
           )
         }
@@ -116,9 +106,9 @@ const UnitListPage: React.FC<IResourceComponentsProps> = () => {
       filters: {
         initial: [
           {
-            field: 'codex',
+            field: 'unit',
             operator: 'eq',
-            value: codexId
+            value: unitId
           }
         ]
       },
@@ -133,10 +123,28 @@ const UnitListPage: React.FC<IResourceComponentsProps> = () => {
     }
   })
 
+  const { data: unitData } = useMany({
+    resource: 'units',
+    ids: tableData?.data?.map((item) => item?.unit) ?? [],
+    queryOptions: {
+      enabled: !!tableData?.data
+    }
+  })
+
+  const { data: sData } = useMany({
+    resource: '',
+    ids: tableData?.data?.map((item) => item?.s) ?? [],
+    queryOptions: {
+      enabled: !!tableData?.data
+    }
+  })
+
   setOptions((prev) => ({
     ...prev,
     meta: {
-      ...prev.meta
+      ...prev.meta,
+      unitData,
+      sData
     }
   }))
 
@@ -148,7 +156,7 @@ const UnitListPage: React.FC<IResourceComponentsProps> = () => {
             go({
               to: 'create',
               query: {
-                codexId
+                unitId
               }
             })
           }
@@ -257,4 +265,4 @@ const Pagination: React.FC<PaginationProps> = ({
   )
 }
 
-export default UnitListPage
+export default WeaponList
