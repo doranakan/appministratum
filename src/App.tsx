@@ -24,6 +24,8 @@ import {
   ModelList,
   UnitCompositionCreate,
   UnitCompositionList,
+  UnitCompositionWargearCreate,
+  UnitCompositionWargearList,
   UnitCreatePage,
   UnitListPage,
   UnitTiersCreate,
@@ -87,6 +89,12 @@ function App() {
                 edit: '/weapons/edit/:id',
                 list: '/weapons',
                 name: 'weapons'
+              },
+              {
+                create: '/unit_composition_wargears/create',
+                edit: '/unit_composition_wargears/edit/:id',
+                list: '/unit_composition_wargears',
+                name: 'unit_composition_wargears'
               }
             ]}
             routerProvider={routerBindings}
@@ -175,6 +183,20 @@ function App() {
                     <Route
                       path='create'
                       Component={UnitCompositionCreate}
+                    />
+                  </Route>
+                  <Route path='unit_composition_wargears'>
+                    <Route
+                      index
+                      Component={UnitCompositionWargearList}
+                    />
+                    <Route
+                      path='edit/:id'
+                      Component={ChakraUIInferencer}
+                    />
+                    <Route
+                      path='create'
+                      Component={UnitCompositionWargearCreate}
                     />
                   </Route>
                   <Route path='models'>
