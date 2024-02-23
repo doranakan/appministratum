@@ -24,14 +24,14 @@ import {
   ModelList,
   UnitCompositionCreate,
   UnitCompositionList,
-  UnitCompositionOptionCreate,
-  UnitCompositionOptionList,
-  UnitCompositionWargearCreate,
-  UnitCompositionWargearList,
   UnitCreatePage,
   UnitListPage,
+  UnitOptionCreate,
+  UnitOptionList,
   UnitTiersCreate,
   UnitTiersList,
+  UnitWargearCreate,
+  UnitWargearList,
   WeaponCreate,
   WeaponList
 } from './pages'
@@ -93,16 +93,16 @@ function App() {
                 name: 'weapons'
               },
               {
-                create: '/unit_composition_wargears/create',
-                edit: '/unit_composition_wargears/edit/:id',
-                list: '/unit_composition_wargears',
-                name: 'unit_composition_wargears'
+                create: '/unit_wargears/create',
+                edit: '/unit_wargears/edit/:id',
+                list: '/unit_wargears',
+                name: 'unit_wargears'
               },
               {
-                create: '/unit_composition_options/create',
-                edit: '/unit_composition_options/edit/:id',
-                list: '/unit_composition_options',
-                name: 'unit_composition_options'
+                create: '/unit_options/create',
+                edit: '/unit_options/edit/:id',
+                list: '/unit_options',
+                name: 'unit_options'
               }
             ]}
             routerProvider={routerBindings}
@@ -193,10 +193,10 @@ function App() {
                       Component={UnitCompositionCreate}
                     />
                   </Route>
-                  <Route path='unit_composition_wargears'>
+                  <Route path='unit_wargears'>
                     <Route
                       index
-                      Component={UnitCompositionWargearList}
+                      Component={UnitWargearList}
                     />
                     <Route
                       path='edit/:id'
@@ -204,13 +204,13 @@ function App() {
                     />
                     <Route
                       path='create'
-                      Component={UnitCompositionWargearCreate}
+                      Component={UnitWargearCreate}
                     />
                   </Route>
-                  <Route path='unit_composition_options'>
+                  <Route path='unit_options'>
                     <Route
                       index
-                      Component={UnitCompositionOptionList}
+                      Component={UnitOptionList}
                     />
                     <Route
                       path='edit/:id'
@@ -218,7 +218,7 @@ function App() {
                     />
                     <Route
                       path='create'
-                      Component={UnitCompositionOptionCreate}
+                      Component={UnitOptionCreate}
                     />
                   </Route>
                   <Route path='models'>

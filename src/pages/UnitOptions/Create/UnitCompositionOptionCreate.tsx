@@ -43,7 +43,7 @@ const UnitCompositionOptionCreate: React.FC<IResourceComponentsProps> = () => {
     },
     defaultValues: {
       unit_composition: unitCompositionId,
-      unit_composition_wargear: null
+      unit_wargear: null
     }
   })
 
@@ -77,7 +77,7 @@ const UnitCompositionOptionCreate: React.FC<IResourceComponentsProps> = () => {
   })
 
   const { options: unitCompositionWargearOptions } = useSelect({
-    resource: 'unit_composition_wargears',
+    resource: 'unit_wargears',
     optionLabel: 'weapon',
     filters: [
       {
@@ -122,7 +122,7 @@ const UnitCompositionOptionCreate: React.FC<IResourceComponentsProps> = () => {
         <Select
           placeholder='Select weapon to replace'
           defaultValue={null}
-          {...register('unit_composition_wargear')}
+          {...register('unit_wargear')}
         >
           {unitCompositionWargearOptions?.map((option) => (
             <option

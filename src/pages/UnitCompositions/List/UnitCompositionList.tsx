@@ -81,7 +81,7 @@ const UnitCompositionList: React.FC<IResourceComponentsProps> = () => {
               <Button
                 onClick={() =>
                   go({
-                    to: '../unit_composition_wargears',
+                    to: '../unit_wargears',
                     query: {
                       unitId,
                       unitCompositionId: getValue()
@@ -94,7 +94,7 @@ const UnitCompositionList: React.FC<IResourceComponentsProps> = () => {
               <Button
                 onClick={() =>
                   go({
-                    to: '../unit_composition_options',
+                    to: '../unit_options',
                     query: {
                       unitId,
                       unitCompositionId: getValue()

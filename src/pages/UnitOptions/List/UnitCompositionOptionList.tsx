@@ -58,9 +58,9 @@ const UnitCompositionOptionList: React.FC<IResourceComponentsProps> = () => {
         }
       },
       // {
-      //   id: 'unit_composition_wargear',
+      //   id: 'unit_wargear',
       //   header: 'Weapon to replace',
-      //   accessorKey: 'unit_composition_wargear',
+      //   accessorKey: 'unit_wargear',
       //   cell: function render({ getValue, table }) {
       //     const meta = table.options.meta as {
       //       unitCompositionWargearData: GetManyResponse
@@ -146,8 +146,8 @@ const UnitCompositionOptionList: React.FC<IResourceComponentsProps> = () => {
   })
 
   const { data: unitCompositionWargearData } = useMany({
-    resource: 'unit_composition_wargears',
-    ids: tableData?.data?.map((item) => item?.unit_composition_wargear) ?? [],
+    resource: 'unit_wargears',
+    ids: tableData?.data?.map((item) => item?.unit_wargear) ?? [],
     queryOptions: {
       enabled: !!tableData?.data
     }
