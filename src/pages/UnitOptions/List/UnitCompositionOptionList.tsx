@@ -17,21 +17,13 @@ import {
   List,
   usePagination
 } from '@refinedev/chakra-ui'
-import {
-  GetManyResponse,
-  IResourceComponentsProps,
-  useGo,
-  useMany,
-  useParsed
-} from '@refinedev/core'
+import { IResourceComponentsProps, useGo, useParsed } from '@refinedev/core'
 import { useTable } from '@refinedev/react-table'
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons'
 import { ColumnDef, flexRender } from '@tanstack/react-table'
 import React from 'react'
 
 const UnitCompositionOptionList: React.FC<IResourceComponentsProps> = () => {
-  // const { data: weapons } = useList({ resource: 'weapons' })
-
   const { params } = useParsed()
 
   const unitId = params?.unitId
@@ -42,44 +34,10 @@ const UnitCompositionOptionList: React.FC<IResourceComponentsProps> = () => {
   const columns = React.useMemo<ColumnDef<any>[]>(
     () => [
       {
-        id: 'weapon',
-        header: 'Weapon',
-        accessorKey: 'weapon',
-        cell: function render({ getValue, table }) {
-          const meta = table.options.meta as {
-            weaponData: GetManyResponse
-          }
-
-          const weapon = meta.weaponData?.data?.find(
-            (item) => item.id == getValue<any>()
-          )
-
-          return weapon?.name ?? 'Loading...'
-        }
+        id: 'unit_wargear',
+        header: 'Wargear to replace',
+        accessorKey: 'unit_wargear'
       },
-      // {
-      //   id: 'unit_wargear',
-      //   header: 'Weapon to replace',
-      //   accessorKey: 'unit_wargear',
-      //   cell: function render({ getValue, table }) {
-      //     const meta = table.options.meta as {
-      //       unitCompositionWargearData: GetManyResponse
-      //     }
-
-      //     const unitCompositionWargear =
-      //       meta.unitCompositionWargearData?.data?.find(
-      //         (item) => item.id == getValue<any>()
-      //       )
-
-      //     console.log(weapons?.data)
-
-      //     const weaponToReplace = weapons?.data?.find(
-      //       (item) => item.id === unitCompositionWargear?.weapon
-      //     )
-
-      //     return weaponToReplace ?? 'Loading...'
-      //   }
-      // },
       {
         id: 'count',
         accessorKey: 'count',
@@ -128,40 +86,6 @@ const UnitCompositionOptionList: React.FC<IResourceComponentsProps> = () => {
       }
     }
   })
-
-  const { data: unitCompositionData } = useMany({
-    resource: 'unit_compositions',
-    ids: tableData?.data?.map((item) => item?.unit_composition) ?? [],
-    queryOptions: {
-      enabled: !!tableData?.data
-    }
-  })
-
-  const { data: weaponData } = useMany({
-    resource: 'weapons',
-    ids: tableData?.data?.map((item) => item?.weapon) ?? [],
-    queryOptions: {
-      enabled: !!tableData?.data
-    }
-  })
-
-  const { data: unitCompositionWargearData } = useMany({
-    resource: 'unit_wargears',
-    ids: tableData?.data?.map((item) => item?.unit_wargear) ?? [],
-    queryOptions: {
-      enabled: !!tableData?.data
-    }
-  })
-
-  setOptions((prev) => ({
-    ...prev,
-    meta: {
-      ...prev.meta,
-      unitCompositionData,
-      weaponData,
-      unitCompositionWargearData
-    }
-  }))
 
   return (
     <List

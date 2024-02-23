@@ -1,9 +1,12 @@
 import {
+  Checkbox,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Input,
-  Select
+  Select,
+  VStack,
+  useCheckboxGroup
 } from '@chakra-ui/react'
 import { Create } from '@refinedev/chakra-ui'
 import {
@@ -24,6 +27,8 @@ const UnitCompositionOptionCreate: React.FC<IResourceComponentsProps> = () => {
 
   const go = useGo()
 
+  const { getCheckboxProps } = useCheckboxGroup()
+
   const {
     refineCore: { formLoading },
     saveButtonProps,
@@ -31,14 +36,16 @@ const UnitCompositionOptionCreate: React.FC<IResourceComponentsProps> = () => {
     formState: { errors }
   } = useForm({
     refineCoreProps: {
-      onMutationSuccess: () =>
+      onMutationSuccess: async () => {
         go({
           query: {
             unitId,
             unitCompositionId
           },
           to: '../'
-        }),
+        })
+      },
+
       redirect: false
     },
     defaultValues: {
@@ -46,7 +53,6 @@ const UnitCompositionOptionCreate: React.FC<IResourceComponentsProps> = () => {
       unit_wargear: null
     }
   })
-
   const { options: weaponOptions } = useSelect({
     resource: 'weapons',
     optionLabel: 'name',
@@ -76,7 +82,7 @@ const UnitCompositionOptionCreate: React.FC<IResourceComponentsProps> = () => {
     ]
   })
 
-  const { options: unitCompositionWargearOptions } = useSelect({
+  const { options: unitWargearOptions } = useSelect({
     resource: 'unit_wargears',
     optionLabel: 'weapon',
     filters: [
@@ -93,38 +99,13 @@ const UnitCompositionOptionCreate: React.FC<IResourceComponentsProps> = () => {
       isLoading={formLoading}
       saveButtonProps={saveButtonProps}
     >
-      <FormControl
-        mb='3'
-        isInvalid={!!errors?.weapon}
-      >
-        <FormLabel>Weapon</FormLabel>
-        <Select
-          placeholder='Select weapon'
-          {...register('weapon', {
-            required: 'This field is required'
-          })}
-        >
-          {weaponOptions?.map((option) => (
-            <option
-              value={option.value}
-              key={option.value}
-            >
-              {option.label}
-            </option>
-          ))}
-        </Select>
-        <FormErrorMessage>
-          {(errors as any)?.weapon?.message as string}
-        </FormErrorMessage>
-      </FormControl>
       <FormControl mb='3'>
         <FormLabel>Weapon to replace</FormLabel>
         <Select
           placeholder='Select weapon to replace'
-          defaultValue={null}
           {...register('unit_wargear')}
         >
-          {unitCompositionWargearOptions?.map((option) => (
+          {unitWargearOptions?.map((option) => (
             <option
               value={option.value}
               key={option.value}
@@ -146,6 +127,28 @@ const UnitCompositionOptionCreate: React.FC<IResourceComponentsProps> = () => {
             valueAsNumber: true
           })}
         />
+      </FormControl>
+      <FormControl
+        mb='3'
+        isInvalid={!!errors?.weapon}
+      >
+        <FormLabel>Weapons</FormLabel>
+        <VStack alignItems='flex-start'>
+          {weaponOptions?.map((option) => (
+            <Checkbox
+              key={option.value}
+              {...register('weapons', { required: 'This field is required' })}
+              {...getCheckboxProps({ value: option.value })}
+            >
+              {weapons?.data?.find((weapon) => weapon.id === option.label)
+                ?.name ?? option.label}
+            </Checkbox>
+          ))}
+        </VStack>
+
+        <FormErrorMessage>
+          {(errors as any)?.weapons?.message as string}
+        </FormErrorMessage>
       </FormControl>
     </Create>
   )
