@@ -5,12 +5,7 @@ import {
   Input
 } from '@chakra-ui/react'
 import { Create } from '@refinedev/chakra-ui'
-import {
-  IResourceComponentsProps,
-  useGo,
-  useParsed,
-  useSelect
-} from '@refinedev/core'
+import { IResourceComponentsProps, useGo, useParsed } from '@refinedev/core'
 import { useForm } from '@refinedev/react-hook-form'
 import { UnitTier } from '../../../models'
 
@@ -41,11 +36,6 @@ const UnitTiersCreate: React.FC<IResourceComponentsProps> = () => {
     defaultValues: {
       unit: unitId
     }
-  })
-
-  const { options: unitOptions } = useSelect({
-    resource: 'units',
-    optionLabel: 'name'
   })
 
   return (
@@ -85,6 +75,22 @@ const UnitTiersCreate: React.FC<IResourceComponentsProps> = () => {
         />
         <FormErrorMessage>
           {(errors as any)?.points?.message as string}
+        </FormErrorMessage>
+      </FormControl>
+      <FormControl
+        mb='3'
+        isInvalid={!!(errors as any)?.points}
+      >
+        <FormLabel>Models</FormLabel>
+        <Input
+          type='number'
+          {...register('models', {
+            required: 'This field is required',
+            valueAsNumber: true
+          })}
+        />
+        <FormErrorMessage>
+          {(errors as any)?.models?.message as string}
         </FormErrorMessage>
       </FormControl>
     </Create>

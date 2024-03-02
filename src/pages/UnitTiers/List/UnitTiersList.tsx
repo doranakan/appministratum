@@ -38,6 +38,11 @@ const UnitTiersList: React.FC<IResourceComponentsProps> = () => {
         header: 'Points'
       },
       {
+        id: 'models',
+        accessorKey: 'models',
+        header: 'Models'
+      },
+      {
         id: 'actions',
         accessorKey: 'id',
         header: 'Actions',
