@@ -2,6 +2,8 @@ import {
   RefineThemes,
   ThemedLayoutV2,
   ThemedSiderV2,
+  ThemedTitleV2,
+  Title,
   notificationProvider
 } from '@refinedev/chakra-ui'
 import { Authenticated, ErrorComponent, Refine } from '@refinedev/core'
@@ -15,7 +17,7 @@ import routerBindings, {
 import { dataProvider, liveProvider } from '@refinedev/supabase'
 import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
 
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider, Heading, HStack, Image } from '@chakra-ui/react'
 import authProvider from './authProvider'
 import {
   CodexListPage,
@@ -46,6 +48,24 @@ function App() {
         {/* You can change the theme colors here. example: theme={RefineThemes.Magenta} */}
         <ChakraProvider theme={RefineThemes.Magenta}>
           <Refine
+            Title={({ collapsed }) =>
+              collapsed ? (
+                <Image
+                  src='src/assets/logo.png'
+                  width={10}
+                  height={10}
+                />
+              ) : (
+                <HStack>
+                  <Image
+                    src='src/assets/logo.png'
+                    width={10}
+                    height={10}
+                  />
+                  <Heading size='xs'>Appministratum</Heading>
+                </HStack>
+              )
+            }
             authProvider={authProvider}
             dataProvider={dataProvider(supabaseClient)}
             liveProvider={liveProvider(supabaseClient)}
