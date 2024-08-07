@@ -48,7 +48,7 @@ const CodexListPage: React.FC<IResourceComponentsProps> = () => {
               >
                 Units
               </Button>
-              <Button
+              {/* <Button
                 onClick={() =>
                   go({
                     to: '../models',
@@ -59,7 +59,7 @@ const CodexListPage: React.FC<IResourceComponentsProps> = () => {
                 }
               >
                 Models
-              </Button>
+              </Button> */}
             </HStack>
           )
         }

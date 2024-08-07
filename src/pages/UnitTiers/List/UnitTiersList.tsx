@@ -41,32 +41,32 @@ const UnitTiersList: React.FC<IResourceComponentsProps> = () => {
         id: 'models',
         accessorKey: 'models',
         header: 'Models'
-      },
-      {
-        id: 'actions',
-        accessorKey: 'id',
-        header: 'Actions',
-        cell: function render({ getValue }) {
-          return (
-            <HStack>
-              <Button
-                onClick={() =>
-                  go({
-                    to: '../unit_compositions',
-                    query: {
-                      codexId,
-                      unitId,
-                      unitTierId: getValue()
-                    }
-                  })
-                }
-              >
-                Composition
-              </Button>
-            </HStack>
-          )
-        }
       }
+      // {
+      //   id: 'actions',
+      //   accessorKey: 'id',
+      //   header: 'Actions',
+      //   cell: function render({ getValue }) {
+      //     return (
+      //       <HStack>
+      //         <Button
+      //           onClick={() =>
+      //             go({
+      //               to: '../unit_compositions',
+      //               query: {
+      //                 codexId,
+      //                 unitId,
+      //                 unitTierId: getValue()
+      //               }
+      //             })
+      //           }
+      //         >
+      //           Composition
+      //         </Button>
+      //       </HStack>
+      //     )
+      //   }
+      // }
     ],
     []
   )

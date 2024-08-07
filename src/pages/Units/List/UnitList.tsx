@@ -80,7 +80,7 @@ const UnitListPage: React.FC<IResourceComponentsProps> = () => {
               >
                 Tiers
               </Button>
-              <Button
+              {/* <Button
                 onClick={() =>
                   go({
                     to: '../weapons',
@@ -91,7 +91,7 @@ const UnitListPage: React.FC<IResourceComponentsProps> = () => {
                 }
               >
                 Weapons
-              </Button>
+              </Button> */}
             </HStack>
           )
         }
