@@ -1,10 +1,9 @@
 import {
+  notificationProvider,
   RefineThemes,
   ThemedLayoutV2,
   ThemedSiderV2,
-  ThemedTitleV2,
-  Title,
-  notificationProvider
+  ThemedTitleV2
 } from '@refinedev/chakra-ui'
 import { Authenticated, ErrorComponent, Refine } from '@refinedev/core'
 import { RefineKbar, RefineKbarProvider } from '@refinedev/kbar'
@@ -15,9 +14,11 @@ import routerBindings, {
   UnsavedChangesNotifier
 } from '@refinedev/react-router-v6'
 import { dataProvider, liveProvider } from '@refinedev/supabase'
-import { BrowserRouter, Outlet, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Link, Outlet, Route, Routes } from 'react-router-dom'
 
-import { ChakraProvider, Heading, HStack, Image } from '@chakra-ui/react'
+import { ChakraProvider, Heading, HStack, Icon, VStack } from '@chakra-ui/react'
+import { ChakraUIInferencer } from '@refinedev/inferencer/chakra-ui'
+import { IconBook, IconServerCog, IconSkull } from '@tabler/icons'
 import authProvider from './authProvider'
 import {
   CodexListPage,
@@ -39,8 +40,6 @@ import {
 } from './pages'
 import { supabaseClient } from './utility'
 
-import { ChakraUIInferencer } from '@refinedev/inferencer/chakra-ui'
-
 function App() {
   return (
     <BrowserRouter>
@@ -48,24 +47,6 @@ function App() {
         {/* You can change the theme colors here. example: theme={RefineThemes.Magenta} */}
         <ChakraProvider theme={RefineThemes.Magenta}>
           <Refine
-            Title={({ collapsed }) =>
-              collapsed ? (
-                <Image
-                  src='src/assets/logo.png'
-                  width={10}
-                  height={10}
-                />
-              ) : (
-                <HStack>
-                  <Image
-                    src='src/assets/logo.png'
-                    width={10}
-                    height={10}
-                  />
-                  <Heading size='xs'>Appministratum</Heading>
-                </HStack>
-              )
-            }
             authProvider={authProvider}
             dataProvider={dataProvider(supabaseClient)}
             liveProvider={liveProvider(supabaseClient)}
@@ -141,7 +122,44 @@ function App() {
                 <Route
                   element={
                     <ThemedLayoutV2
-                      Sider={() => <ThemedSiderV2 render={() => <></>} />}
+                      Title={({ collapsed }) => (
+                        <ThemedTitleV2
+                          collapsed={collapsed}
+                          icon={<IconSkull />}
+                          text='Appministratum'
+                        />
+                      )}
+                      Sider={({ Title }) => (
+                        <ThemedSiderV2
+                          Title={Title}
+                          render={({ collapsed }) => (
+                            <VStack alignItems='flex-start'>
+                              <Link to='/'>
+                                <HStack
+                                  justifyContent='center'
+                                  p='4'
+                                >
+                                  <Icon as={IconBook} />
+                                  {!collapsed && (
+                                    <Heading size='sm'>Codexes</Heading>
+                                  )}
+                                </HStack>
+                              </Link>
+                              <Link to='/'>
+                                <HStack
+                                  justifyContent='center'
+                                  p='4'
+                                >
+                                  <Icon as={IconServerCog} />
+                                  {!collapsed && (
+                                    <Heading size='sm'>Munitorum</Heading>
+                                  )}
+                                </HStack>
+                              </Link>
+                            </VStack>
+                          )}
+                        />
+                      )}
                     >
                       <Outlet />
                     </ThemedLayoutV2>
