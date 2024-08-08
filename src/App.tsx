@@ -28,6 +28,7 @@ import {
   UnitTiersCreate,
   UnitTiersList
 } from './pages'
+import Munitorum from './pages/Munitorum'
 import { supabaseClient } from './utility'
 
 function App() {
@@ -105,7 +106,7 @@ function App() {
                                   )}
                                 </HStack>
                               </Link>
-                              <Link to='/'>
+                              <Link to='/munitorum'>
                                 <HStack
                                   justifyContent='center'
                                   p='4'
@@ -167,6 +168,14 @@ function App() {
                       Component={UnitTiersCreate}
                     />
                   </Route>
+
+                  <Route path='munitorum'>
+                    <Route
+                      index
+                      Component={Munitorum}
+                    />
+                  </Route>
+
                   <Route
                     path='*'
                     element={<ErrorComponent />}
