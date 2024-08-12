@@ -12,7 +12,6 @@ import {
   Tr
 } from '@chakra-ui/react'
 import {
-  BooleanField,
   CreateButton,
   EditButton,
   List,
@@ -39,24 +38,6 @@ const UnitListPage: React.FC<IResourceComponentsProps> = () => {
         header: 'Name'
       },
       {
-        id: 'caption',
-        accessorKey: 'caption',
-        header: 'Caption'
-      },
-      {
-        id: 'leader',
-        accessorKey: 'leader',
-        header: 'Leader',
-        cell: function render({ getValue }) {
-          return <BooleanField value={getValue<any>()} />
-        }
-      },
-      {
-        id: 'limit',
-        accessorKey: 'limit',
-        header: 'Limit'
-      },
-      {
         id: 'actions',
         accessorKey: 'id',
         header: 'Actions',
@@ -80,18 +61,6 @@ const UnitListPage: React.FC<IResourceComponentsProps> = () => {
               >
                 Tiers
               </Button>
-              {/* <Button
-                onClick={() =>
-                  go({
-                    to: '../weapons',
-                    query: {
-                      unitId: getValue()
-                    }
-                  })
-                }
-              >
-                Weapons
-              </Button> */}
             </HStack>
           )
         }

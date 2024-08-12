@@ -1,5 +1,4 @@
 import {
-  Checkbox,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -56,43 +55,6 @@ const UnitCreatePage: React.FC<IResourceComponentsProps> = () => {
         />
         <FormErrorMessage>
           {(errors as any)?.name?.message as string}
-        </FormErrorMessage>
-      </FormControl>
-      <FormControl
-        mb='3'
-        isInvalid={!!(errors as any)?.caption}
-      >
-        <FormLabel>Caption</FormLabel>
-        <Input
-          type='text'
-          {...register('caption')}
-        />
-        <FormErrorMessage>
-          {(errors as any)?.caption?.message as string}
-        </FormErrorMessage>
-      </FormControl>
-      <FormControl
-        mb='3'
-        isInvalid={!!errors?.leader}
-      >
-        <FormLabel>Leader</FormLabel>
-        <Checkbox {...register('leader')} />
-        <FormErrorMessage>{errors?.leader?.message as string}</FormErrorMessage>
-      </FormControl>
-      <FormControl
-        mb='3'
-        isInvalid={!!(errors as any)?.limit}
-      >
-        <FormLabel>Limit</FormLabel>
-        <Input
-          type='number'
-          {...register('limit', {
-            required: 'This field is required',
-            valueAsNumber: true
-          })}
-        />
-        <FormErrorMessage>
-          {(errors as any)?.limit?.message as string}
         </FormErrorMessage>
       </FormControl>
     </Create>

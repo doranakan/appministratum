@@ -23,20 +23,10 @@ import authProvider from './authProvider'
 import {
   CodexListPage,
   LoginPage,
-  ModelCreate,
-  ModelList,
-  UnitCompositionCreate,
-  UnitCompositionList,
   UnitCreatePage,
   UnitListPage,
-  UnitOptionCreate,
-  UnitOptionList,
   UnitTiersCreate,
-  UnitTiersList,
-  UnitWargearCreate,
-  UnitWargearList,
-  WeaponCreate,
-  WeaponList
+  UnitTiersList
 } from './pages'
 import { supabaseClient } from './utility'
 
@@ -74,36 +64,6 @@ function App() {
                 edit: '/unit_tiers/edit/:id',
                 list: '/unit_tiers',
                 name: 'unit_tiers'
-              },
-              {
-                create: '/unit_compositions/create',
-                edit: '/unit_compositions/edit/:id',
-                list: '/unit_compositions',
-                name: 'unit_compositions'
-              },
-              {
-                create: '/models/create',
-                edit: '/models/edit/:id',
-                list: '/models',
-                name: 'models'
-              },
-              {
-                create: '/weapons/create',
-                edit: '/weapons/edit/:id',
-                list: '/weapons',
-                name: 'weapons'
-              },
-              {
-                create: '/unit_wargears/create',
-                edit: '/unit_wargears/edit/:id',
-                list: '/unit_wargears',
-                name: 'unit_wargears'
-              },
-              {
-                create: '/unit_options/create',
-                edit: '/unit_options/edit/:id',
-                list: '/unit_options',
-                name: 'unit_options'
               }
             ]}
             routerProvider={routerBindings}
@@ -197,20 +157,6 @@ function App() {
                       element={<UnitCreatePage />}
                     />
                   </Route>
-                  <Route path='weapons'>
-                    <Route
-                      index
-                      Component={WeaponList}
-                    />
-                    <Route
-                      path='create'
-                      Component={WeaponCreate}
-                    />
-                  </Route>
-                  <Route
-                    path='*'
-                    element={<ErrorComponent />}
-                  />
                   <Route path='unit_tiers'>
                     <Route
                       index
@@ -219,54 +165,6 @@ function App() {
                     <Route
                       path='create'
                       Component={UnitTiersCreate}
-                    />
-                  </Route>
-                  <Route path='unit_compositions'>
-                    <Route
-                      index
-                      Component={UnitCompositionList}
-                    />
-                    <Route
-                      path='create'
-                      Component={UnitCompositionCreate}
-                    />
-                  </Route>
-                  <Route path='unit_wargears'>
-                    <Route
-                      index
-                      Component={UnitWargearList}
-                    />
-                    <Route
-                      path='edit/:id'
-                      Component={ChakraUIInferencer}
-                    />
-                    <Route
-                      path='create'
-                      Component={UnitWargearCreate}
-                    />
-                  </Route>
-                  <Route path='unit_options'>
-                    <Route
-                      index
-                      Component={UnitOptionList}
-                    />
-                    <Route
-                      path='edit/:id'
-                      Component={ChakraUIInferencer}
-                    />
-                    <Route
-                      path='create'
-                      Component={UnitOptionCreate}
-                    />
-                  </Route>
-                  <Route path='models'>
-                    <Route
-                      index
-                      Component={ModelList}
-                    />
-                    <Route
-                      path='create'
-                      Component={ModelCreate}
                     />
                   </Route>
                   <Route
